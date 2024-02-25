@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 FROM node:14-alphine as build
 WORKDIR /app    
 COPY package*.json  ./
@@ -8,3 +9,34 @@ FROM nginx:alpine
 COPY --from=build /app/build /usr/share/nginx/html
 EXPOSE 80
 CMD [ "nginx", "g","dameon off;" ]
+=======
+# Stage 1: Build the React app
+FROM node:14-alpine as build
+
+WORKDIR /app
+
+# Copy package.json and package-lock.json to the working director
+COPY package*.json ./ 
+
+# Install dependencies
+RUN npm install
+
+# Copy the rest of the application code to the working directory
+COPY . .
+
+# Build the React app
+RUN npm run build
+
+# Stage 2: Serve the built React app using nginx
+FROM nginx:alpine
+
+# Copy the build output from the 'build' stage to the nginx web server directory
+COPY --from=build /app/build /usr/share/nginx/html
+
+# Expose port 80 to the outside world
+EXPOSE 80
+
+# Start nginx when the container starts
+CMD ["nginx", "-g", "daemon off;"]
+
+>>>>>>> 9eb241b8f3289267a0bf6bef978a186ab5123616
