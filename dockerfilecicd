@@ -15,8 +15,13 @@ FROM node:14-alpine as build
 
 WORKDIR /app
 
+<<<<<<< HEAD
 # Copy package.json and package-lock.json to the working director
 COPY package*.json ./ 
+=======
+# Copy package.json and package-lock.json to the working directory
+COPY package*.json ./
+>>>>>>> parent of 2c86f9b (Update dockerfilecicd)
 
 # Install dependencies
 RUN npm install
