@@ -1,0 +1,19 @@
+00:00:01.115079 VirtualBox GUI VM Selector Window 7.0.18 r162988 win.amd64 (May  2 2024 10:02:33) release log
+00:00:01.115085 Log opened 2024-06-22T04:43:40.962956900Z
+00:00:01.115087 Build Type: release
+00:00:01.115094 OS Product: Windows 11
+00:00:01.115097 OS Release: 10.0.22631
+00:00:01.115098 OS Service Pack: 
+00:00:01.184005 DMI Product Name: HP Pavilion Laptop 15-eh1xxx
+00:00:01.191537 DMI Product Version:  
+00:00:01.191590 Firmware type: UEFI
+00:00:01.192069 Secure Boot: VERR_PRIVILEGE_NOT_HELD
+00:00:01.192102 Host RAM: 7501MB (7.3GB) total, 912MB available
+00:00:01.192106 Executable: C:\Program Files\Oracle\VirtualBox\VirtualBox.exe
+00:00:01.192107 Process ID: 16688
+00:00:01.192107 Package type: WINDOWS_64BITS_GENERIC
+00:00:01.192804 Qt version: 5.15.2
+00:00:01.196219 GUI: UIMediumEnumerator: Initial medium-enumeration finished!
+00:00:01.247846 GUI: UIMediumEnumerator: Medium-enumeration started...
+00:00:03.365783 GUI: UIMediumEnumerator: Medium-enumeration finished!
+00:29:32.783015 GUI: UIMediumEnumerator: Medium-enumeration finished!
