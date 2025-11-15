@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import Calculator from './components/Calculator';
-import CurrencyConverter from './components/CurrencyConverter';
-import InterestCalculator from './components/InterestCalculator';
-import WorldClock from './components/worldclock/WorldClock';
-import NotesManager from './components/notes/NotesManager';
-import MoneyGraph from './components/money-graph/MoneyGraph';
 import LoginPage from './pages/LoginPage';
 import Dashboard from './components/layout/Dashboard';
 import { useAuth } from './hooks/useAuth';
 
-// Import new calculators
+// Import components
+import CurrencyConverter from './components/CurrencyConverter';
+import InterestCalculator from './components/InterestCalculator';
 import SIPCalculator from './components/calculators/SIPCalculator';
 import CAGRCalculator from './components/calculators/CAGRCalculator';
 import PECalculator from './components/calculators/PECalculator';
 import RiskCalculator from './components/calculators/RiskCalculator';
+import MoneyGraph from './components/money-graph/MoneyGraph';
+import NotesManager from './components/notes/NotesManager';
+import WorldClock from './components/worldclock/WorldClock';
+import NewsSection from './components/news/NewsSection';
 
 function App() {
   const { isAuthenticated } = useAuth();
@@ -37,7 +37,6 @@ function DashboardPage() {
 
   return (
     <Dashboard activeTool={activeTool} onToolChange={setActiveTool}>
-      {/* Default Dashboard View */}
       {!activeTool && (
         <div className="text-center py-20">
           <h2 className="text-3xl font-semibold text-gray-900 mb-4">Welcome to K_Market</h2>
@@ -45,7 +44,6 @@ function DashboardPage() {
         </div>
       )}
 
-      {/* Currency Converter Tool */}
       {activeTool === 'currency-converter' && (
         <div className="max-w-md mx-auto">
           <div className="bg-white rounded-lg shadow-lg p-8">
@@ -58,7 +56,6 @@ function DashboardPage() {
         </div>
       )}
 
-      {/* Interest Calculator Tool */}
       {activeTool === 'interest-calculator' && (
         <div className="max-w-md mx-auto">
           <div className="bg-white rounded-lg shadow-lg p-8">
@@ -71,7 +68,6 @@ function DashboardPage() {
         </div>
       )}
 
-      {/* SIP Calculator */}
       {activeTool === 'sip-calculator' && (
         <div className="max-w-md mx-auto">
           <div className="bg-white rounded-lg shadow-lg p-8">
@@ -84,7 +80,6 @@ function DashboardPage() {
         </div>
       )}
 
-      {/* CAGR Calculator */}
       {activeTool === 'cagr-calculator' && (
         <div className="max-w-md mx-auto">
           <div className="bg-white rounded-lg shadow-lg p-8">
@@ -97,7 +92,6 @@ function DashboardPage() {
         </div>
       )}
 
-      {/* P/E Calculator */}
       {activeTool === 'pe-calculator' && (
         <div className="max-w-md mx-auto">
           <div className="bg-white rounded-lg shadow-lg p-8">
@@ -110,7 +104,6 @@ function DashboardPage() {
         </div>
       )}
 
-      {/* Risk Calculator */}
       {activeTool === 'risk-calculator' && (
         <div className="max-w-md mx-auto">
           <div className="bg-white rounded-lg shadow-lg p-8">
@@ -123,7 +116,17 @@ function DashboardPage() {
         </div>
       )}
 
-      {/* Currency Trends */}
+      {activeTool === 'financial-news' && (
+        <div className="max-w-5xl mx-auto">
+          <div className="bg-white rounded-lg shadow-lg p-8">
+            <div className="flex justify-between items-center mb-6">
+              <button onClick={closeTool} className="text-gray-400 hover:text-gray-600 text-2xl ml-auto">✕</button>
+            </div>
+            <NewsSection />
+          </div>
+        </div>
+      )}
+
       {activeTool === 'currency-trends' && (
         <div className="max-w-5xl mx-auto">
           <div className="bg-white rounded-lg shadow-lg p-8">
@@ -136,7 +139,6 @@ function DashboardPage() {
         </div>
       )}
 
-      {/* Notes */}
       {activeTool === 'notes' && (
         <div className="max-w-3xl mx-auto">
           <div className="bg-white rounded-lg shadow-lg p-8">
@@ -149,7 +151,6 @@ function DashboardPage() {
         </div>
       )}
 
-      {/* World Clock */}
       {activeTool === 'world-clock' && (
         <div className="max-w-4xl mx-auto">
           <div className="bg-white rounded-lg shadow-lg p-8">

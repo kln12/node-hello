@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { LogOut, ChevronDown } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 
@@ -13,6 +13,9 @@ const Dashboard: React.FC<DashboardProps> = ({ children, activeTool, onToolChang
   const [showSolutionsDropdown, setShowSolutionsDropdown] = useState(false);
   const [showDataDropdown, setShowDataDropdown] = useState(false);
   const [showCalculatorSubmenu, setShowCalculatorSubmenu] = useState(false);
+  
+  const solutionsRef = useRef<HTMLDivElement>(null);
+  const dataRef = useRef<HTMLDivElement>(null);
 
   const handleLogout = () => {
     logout();
@@ -27,6 +30,24 @@ const Dashboard: React.FC<DashboardProps> = ({ children, activeTool, onToolChang
     setShowCalculatorSubmenu(false);
   };
 
+  // Close dropdowns when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (solutionsRef.current && !solutionsRef.current.contains(event.target as Node)) {
+        setShowSolutionsDropdown(false);
+        setShowCalculatorSubmenu(false);
+      }
+      if (dataRef.current && !dataRef.current.contains(event.target as Node)) {
+        setShowDataDropdown(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   return (
     <div className="min-h-screen bg-gray-50">
       <header className="bg-white border-b border-gray-200">
@@ -39,7 +60,7 @@ const Dashboard: React.FC<DashboardProps> = ({ children, activeTool, onToolChang
               
               <nav className="flex space-x-6">
                 {/* Solutions Dropdown */}
-                <div className="relative">
+                <div className="relative" ref={solutionsRef}>
                   <button
                     onClick={() => {
                       setShowSolutionsDropdown(!showSolutionsDropdown);
@@ -48,7 +69,7 @@ const Dashboard: React.FC<DashboardProps> = ({ children, activeTool, onToolChang
                     className="flex items-center space-x-1 text-base font-medium text-gray-700 hover:text-gray-900 py-6"
                   >
                     <span>Solutions</span>
-                    <ChevronDown className="w-4 h-4" />
+                    <ChevronDown className={`w-4 h-4 transition-transform ${showSolutionsDropdown ? 'rotate-180' : ''}`} />
                   </button>
                   
                   {showSolutionsDropdown && (
@@ -67,10 +88,12 @@ const Dashboard: React.FC<DashboardProps> = ({ children, activeTool, onToolChang
                       </button>
                       
                       {/* Calculator Tools with Submenu */}
-                      <div className="relative">
+                      <div 
+                        className="relative"
+                        onMouseEnter={() => setShowCalculatorSubmenu(true)}
+                        onMouseLeave={() => setShowCalculatorSubmenu(false)}
+                      >
                         <button
-                          onMouseEnter={() => setShowCalculatorSubmenu(true)}
-                          onMouseLeave={() => setShowCalculatorSubmenu(false)}
                           className="w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 flex items-center justify-between"
                         >
                           <span>Calculator Tools</span>
@@ -81,9 +104,7 @@ const Dashboard: React.FC<DashboardProps> = ({ children, activeTool, onToolChang
                         
                         {showCalculatorSubmenu && (
                           <div 
-                            className="absolute left-full top-0 w-48 bg-white shadow-lg rounded-lg border border-gray-200 py-2 ml-1"
-                            onMouseEnter={() => setShowCalculatorSubmenu(true)}
-                            onMouseLeave={() => setShowCalculatorSubmenu(false)}
+                            className="absolute left-full top-0 w-48 bg-white shadow-lg rounded-lg border border-gray-200 py-2 ml-1 z-50"
                           >
                             <button
                               onClick={() => openTool('sip-calculator')}
@@ -117,20 +138,27 @@ const Dashboard: React.FC<DashboardProps> = ({ children, activeTool, onToolChang
                 </div>
 
                 {/* Data Dropdown */}
-                <div className="relative">
+                <div className="relative" ref={dataRef}>
                   <button
                     onClick={() => {
                       setShowDataDropdown(!showDataDropdown);
                       setShowSolutionsDropdown(false);
+                      setShowCalculatorSubmenu(false);
                     }}
                     className="flex items-center space-x-1 text-base font-medium text-gray-700 hover:text-gray-900 py-6"
                   >
                     <span>Data</span>
-                    <ChevronDown className="w-4 h-4" />
+                    <ChevronDown className={`w-4 h-4 transition-transform ${showDataDropdown ? 'rotate-180' : ''}`} />
                   </button>
                   
                   {showDataDropdown && (
                     <div className="absolute top-full left-0 mt-0 w-56 bg-white shadow-lg rounded-b-lg border border-gray-200 py-2 z-50">
+                      <button
+                        onClick={() => openTool('financial-news')}
+                        className="w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-gray-50"
+                      >
+                        Financial News
+                      </button>
                       <button
                         onClick={() => openTool('currency-trends')}
                         className="w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-gray-50"
